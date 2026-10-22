@@ -1,32 +1,43 @@
-# React + TypeScript + Vite
+# Welcome
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A small React app: a "welcome" heading and a button that counts clicks. It's a starting point built on a modern, fully checked toolchain.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [Vite 8](https://vite.dev) + [React 19](https://react.dev) + TypeScript
+- [Tailwind CSS v4](https://tailwindcss.com) and [shadcn/ui](https://ui.shadcn.com) components (Radix-based)
+- [Vitest](https://vitest.dev) + React Testing Library for tests
+- [Oxlint](https://oxc.rs) for linting, [Prettier](https://prettier.io) for formatting
+- GitHub Actions CI running `npm audit`, lint, format check, tests and build
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Node is pinned to the 24 major in `mise.toml`. With [mise](https://mise.jdx.dev) installed:
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+mise install   # installs the pinned Node version
+npm install
+npm run dev    # http://localhost:5173
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Without mise, use any Node 24 install.
+
+## Scripts
+
+| Command           | What it does                                         |
+| ----------------- | ---------------------------------------------------- |
+| `npm run dev`     | Dev server with hot reload                           |
+| `npm run build`   | Type-check, then build to `dist/`                    |
+| `npm run preview` | Serve the production build                           |
+| `npm test`        | Run the tests once (`npm run test:watch` to watch)   |
+| `npm run lint`    | Lint with Oxlint                                     |
+| `npm run format`  | Format with Prettier (`format:check` to verify only) |
+
+## Adding UI components
+
+```sh
+npx shadcn@latest add <component>
+npm run format
+```
+
+Components are copied into `src/components/ui/` and are ours to edit. The `shadcn` CLI is intentionally not a project dependency; see [CLAUDE.md](CLAUDE.md) for why, and for the project's other conventions.

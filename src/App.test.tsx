@@ -4,13 +4,23 @@ import { describe, expect, it } from 'vitest'
 import App from './App.tsx'
 
 describe('App', () => {
-  it('increments the counter when the button is clicked', async () => {
+  it('shows the welcome heading', () => {
+    render(<App />)
+
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'welcome' }),
+    ).toBeInTheDocument()
+  })
+
+  it('counts clicks on the button', async () => {
     const user = userEvent.setup()
     render(<App />)
 
-    const button = screen.getByRole('button', { name: 'Count is 0' })
+    const button = screen.getByRole('button', { name: '0 clicks' })
     await user.click(button)
+    expect(button).toHaveTextContent(/^1 click$/)
 
-    expect(button).toHaveTextContent('Count is 1')
+    await user.click(button)
+    expect(button).toHaveTextContent(/^2 clicks$/)
   })
 })

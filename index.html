@@ -2,9 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vite-app</title>
+    <title>Welcome</title>
+    <meta
+      name="description"
+      content="A simple welcome page with a click counter, built with React and shadcn/ui."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0a0a0a"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Welcome" />
+    <meta
+      property="og:description"
+      content="A simple welcome page with a click counter, built with React and shadcn/ui."
+    />
+    <!-- No favicon yet; the empty data URL stops browsers requesting /favicon.ico. -->
+    <link rel="icon" href="data:," />
+    <script>
+      // shadcn themes switch on a .dark class; follow the OS setting before first paint.
+      {
+        const media = matchMedia('(prefers-color-scheme: dark)')
+        const applyTheme = () =>
+          document.documentElement.classList.toggle('dark', media.matches)
+        applyTheme()
+        media.addEventListener('change', applyTheme)
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

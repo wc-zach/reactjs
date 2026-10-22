@@ -4,7 +4,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vite-app</title>
+    <title>reactjs</title>
+    <script>
+      // shadcn themes switch on a .dark class; follow the OS setting before first paint.
+      const media = matchMedia('(prefers-color-scheme: dark)')
+      const applyTheme = () =>
+        document.documentElement.classList.toggle('dark', media.matches)
+      applyTheme()
+      media.addEventListener('change', applyTheme)
+    </script>
   </head>
   <body>
     <div id="root"></div>

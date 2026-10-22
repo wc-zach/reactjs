@@ -24,10 +24,19 @@ Vitest is configured in `vite.config.ts` (`test` block) with jsdom and React Tes
 
 ## Architecture
 
-Vite 8 + React 19 + TypeScript 6 single-page app scaffolded from `create-vite`'s `react-ts` template.
+Vite 8 + React 19 + TypeScript 6 single-page app, styled with Tailwind CSS v4 and shadcn/ui (Radix-based, "radix-nova" style).
 
 - `index.html` is the entry point and loads `src/main.tsx`, which mounts `<App />` into `#root` under `StrictMode`.
 - TypeScript uses project references: `tsconfig.json` → `tsconfig.app.json` (browser code in `src/`) and `tsconfig.node.json` (`vite.config.ts`). Bundler resolution with `noEmit` — Vite does the transpiling, `tsc` only type-checks.
 - Strictness to keep in mind: `verbatimModuleSyntax` (type-only imports must use `import type`), `erasableSyntaxOnly` (no `enum`, `namespace`, or constructor parameter properties), `noUnusedLocals`/`noUnusedParameters`.
-- Lint is Oxlint, not ESLint. `react/only-export-components` warns when a component file exports non-components (breaks Fast Refresh).
-- Static files in `public/` are served at `/` as-is; assets imported from `src/assets/` are hashed and bundled.
+- `@/` is an alias for `src/`, defined in both `tsconfig.json`/`tsconfig.app.json` (`paths`) and `vite.config.ts` (`resolve.alias`). Keep them in sync.
+- Lint is Oxlint, not ESLint. `react/only-export-components` warns when a component file exports non-components (breaks Fast Refresh); it's turned off for `src/components/ui/**` because shadcn components export variant helpers.
+- Static files in `public/` are served at `/` as-is; assets imported from `src/` are hashed and bundled.
+
+## UI: Tailwind + shadcn/ui
+
+- Tailwind v4 runs through the `@tailwindcss/vite` plugin; there is no `tailwind.config.js`. Theme tokens (colors, radius, fonts) are CSS variables in `src/index.css` (`:root` for light, `.dark` for dark, mapped to Tailwind via `@theme inline`).
+- Dark mode is class-based (`.dark` on `<html>`). An inline script in `index.html` sets it from `prefers-color-scheme` before first paint and follows OS changes.
+- shadcn components are source files we own in `src/components/ui/`; edit them freely. `cn()` (class merging) comes from the `cn` package, re-exported by `src/lib/utils.ts`. Icons are `lucide-react`.
+- Add components with `npx shadcn@latest add <name>` (config in `components.json`). Afterwards run `npm run format` and check `package.json`: the `shadcn` CLI package is deliberately **not** a dependency (its transitive deps fail `npm audit`), so remove it if `add` re-installs it, and keep `src/index.css` importing `./styles/shadcn-tailwind.css` rather than `shadcn/tailwind.css`.
+- `src/styles/shadcn-tailwind.css` is vendored from the `shadcn` package (custom variants like `data-open`, plus utilities); it's excluded from Prettier so updates can be copied over verbatim.

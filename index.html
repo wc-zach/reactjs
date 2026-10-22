@@ -29,11 +29,13 @@
     <link rel="icon" href="data:," />
     <script>
       // shadcn themes switch on a .dark class; follow the OS setting before first paint.
-      const media = matchMedia('(prefers-color-scheme: dark)')
-      const applyTheme = () =>
-        document.documentElement.classList.toggle('dark', media.matches)
-      applyTheme()
-      media.addEventListener('change', applyTheme)
+      {
+        const media = matchMedia('(prefers-color-scheme: dark)')
+        const applyTheme = () =>
+          document.documentElement.classList.toggle('dark', media.matches)
+        applyTheme()
+        media.addEventListener('change', applyTheme)
+      }
     </script>
   </head>
   <body>

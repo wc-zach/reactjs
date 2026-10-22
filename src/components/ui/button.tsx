@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { cn } from 'cn'
+import { cn } from '@/lib/utils'
 import { Slot } from 'radix-ui'
 
 const buttonVariants = cva(
@@ -45,6 +45,7 @@ function Button({
   variant = 'default',
   size = 'default',
   asChild = false,
+  type,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
@@ -57,6 +58,8 @@ function Button({
       data-slot="button"
       data-variant={variant}
       data-size={size}
+      // Default to a non-submitting button; with asChild the child element decides.
+      type={asChild ? type : (type ?? 'button')}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />

@@ -18,9 +18,9 @@ describe('App', () => {
 
     const button = screen.getByRole('button', { name: '0 clicks' })
     await user.click(button)
-    expect(button).toHaveTextContent('1 click')
+    expect(button).toHaveTextContent(/^1 click$/)
 
     await user.click(button)
-    expect(button).toHaveTextContent('2 clicks')
+    expect(button).toHaveTextContent(/^2 clicks$/)
   })
 })

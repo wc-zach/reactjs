@@ -29,7 +29,7 @@ Vite 8 + React 19 + TypeScript 6 single-page app, styled with Tailwind CSS v4 an
 - `index.html` is the entry point and loads `src/main.tsx`, which mounts `<App />` into `#root` under `StrictMode`.
 - TypeScript uses project references: `tsconfig.json` → `tsconfig.app.json` (browser code in `src/`) and `tsconfig.node.json` (`vite.config.ts`). Bundler resolution with `noEmit` — Vite does the transpiling, `tsc` only type-checks.
 - Strictness to keep in mind: `verbatimModuleSyntax` (type-only imports must use `import type`), `erasableSyntaxOnly` (no `enum`, `namespace`, or constructor parameter properties), `noUnusedLocals`/`noUnusedParameters`.
-- `@/` is an alias for `src/`, defined in both `tsconfig.json`/`tsconfig.app.json` (`paths`) and `vite.config.ts` (`resolve.alias`). Keep them in sync.
+- `@/` is an alias for `src/`, defined once as `paths` in `tsconfig.app.json` (mirrored in the root `tsconfig.json`, which the shadcn CLI reads). Vite and Vitest pick it up via `resolve.tsconfigPaths: true`; don't add a separate `resolve.alias`.
 - Lint is Oxlint, not ESLint. `react/only-export-components` warns when a component file exports non-components (breaks Fast Refresh); it's turned off for `src/components/ui/**` because shadcn components export variant helpers.
 - Static files in `public/` are served at `/` as-is; assets imported from `src/` are hashed and bundled.
 

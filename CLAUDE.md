@@ -16,7 +16,7 @@ Node is managed by [mise](https://mise.jdx.dev) via `mise.toml`, pinned to the N
 - `npx vitest run src/App.test.tsx` — one file; add `-t "<name>"` to filter by test name
 - `npm run preview` — serve the built `dist/`
 
-`npm run build` is the type-check gate; use `npx tsc -b` to type-check without building. CI (`.github/workflows/ci.yml`) runs lint, format check, tests and build on pushes to `main` and on PRs, using the Node version from `mise.toml`.
+`npm run build` is the type-check gate; use `npx tsc -b` to type-check without building. CI (`.github/workflows/ci.yml`) runs `npm audit --audit-level=moderate`, lint, format check, tests and build on pushes to `main` and on PRs, using the Node version from `mise.toml`.
 
 ## Testing
 

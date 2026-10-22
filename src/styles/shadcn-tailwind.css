@@ -1,4 +1,4 @@
-/* Vendored from shadcn@4.22.1 (dist/tailwind.css) so the app doesn't depend on the shadcn CLI package. Update by copying the new file over this one. */
+/* Vendored from shadcn@4.22.1 (dist/tailwind.css). See CLAUDE.md before updating. */
 @theme inline {
   @keyframes accordion-down {
     from {

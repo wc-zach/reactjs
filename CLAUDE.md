@@ -39,4 +39,8 @@ Vite 8 + React 19 + TypeScript 6 single-page app, styled with Tailwind CSS v4 an
 - Dark mode is class-based (`.dark` on `<html>`). An inline script in `index.html` sets it from `prefers-color-scheme` before first paint and follows OS changes.
 - shadcn components are source files we own in `src/components/ui/`; edit them freely. `cn()` (class merging) comes from the `cn` package, re-exported by `src/lib/utils.ts`. Icons are `lucide-react`.
 - Add components with `npx shadcn@latest add <name>` (config in `components.json`). Afterwards run `npm run format` and check `package.json`: the `shadcn` CLI package is deliberately **not** a dependency (its transitive deps fail `npm audit`), so remove it if `add` re-installs it, and keep `src/index.css` importing `./styles/shadcn-tailwind.css` rather than `shadcn/tailwind.css`.
-- `src/styles/shadcn-tailwind.css` is vendored from the `shadcn` package (custom variants like `data-open`, plus utilities); it's excluded from Prettier so updates can be copied over verbatim.
+- `src/styles/shadcn-tailwind.css` is vendored, unmodified, from the `shadcn` npm package's `dist/tailwind.css` (currently shadcn@4.22.1). It holds custom variants like `data-open` plus utilities, and is excluded from Prettier so it stays byte-for-byte comparable with upstream. To update it without adding `shadcn` as a dependency:
+  1. `npm pack shadcn@<version>` in a scratch directory and extract the tarball.
+  2. Copy `package/dist/tailwind.css` over `src/styles/shadcn-tailwind.css`.
+  3. Re-add the one-line header comment at the top with the new version, and update the version here.
+- Focus rings use `--ring`, set to macOS system blue (`#007aff` light, `#0a84ff` dark) for at least 3:1 contrast (WCAG 1.4.11). Use `ring-ring` / `outline-ring` without an opacity modifier, which would drop it below that.

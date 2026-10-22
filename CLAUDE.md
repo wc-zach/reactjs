@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Toolchain
 
-Node is managed by [mise](https://mise.jdx.dev) via `mise.toml` (`node = "lts"`). In non-interactive shells where mise isn't activated, prefix commands with `mise x --` (e.g. `mise x -- npm run build`) so the pinned Node is used.
+Node is managed by [mise](https://mise.jdx.dev) via `mise.toml`, pinned to the Node 24 major (`node = "24"`); bump it deliberately, together with `@types/node`. In non-interactive shells where mise isn't activated, prefix commands with `mise x --` (e.g. `mise x -- npm run build`) so the pinned Node is used.
 
 ## Commands
 
@@ -20,7 +20,7 @@ Node is managed by [mise](https://mise.jdx.dev) via `mise.toml` (`node = "lts"`)
 
 ## Testing
 
-Vitest is configured in `vite.config.ts` (`test` block) with jsdom and React Testing Library. Test files live next to the code as `*.test.tsx`. Vitest globals are off, so import `describe`/`it`/`expect` from `vitest`. `src/test/setup.ts` registers the jest-dom matchers (`toHaveTextContent`, etc.) and runs Testing Library's `cleanup` after each test. Prefer `userEvent` over `fireEvent` for interactions.
+Vitest is configured in `vite.config.ts` (`test` block) with jsdom and React Testing Library. Test files live next to the code as `*.test.tsx`. Vitest globals are off, so import `describe`/`it`/`expect` from `vitest`. `src/test/setup.ts` registers the jest-dom matchers (`toHaveTextContent`, etc.), turns on `reactStrictMode` (tests render under StrictMode like `main.tsx`), and runs Testing Library's `cleanup` after each test. Prefer `userEvent` over `fireEvent` for interactions.
 
 ## Architecture
 

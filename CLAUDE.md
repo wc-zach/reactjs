@@ -11,9 +11,16 @@ Node is managed by [mise](https://mise.jdx.dev) via `mise.toml` (`node = "lts"`)
 - `npm run dev` — Vite dev server with HMR
 - `npm run build` — type-check (`tsc -b`) then production build to `dist/`
 - `npm run lint` — Oxlint (config in `.oxlintrc.json`)
+- `npm run format` / `npm run format:check` — Prettier (no semicolons, single quotes)
+- `npm test` — Vitest, single run; `npm run test:watch` for watch mode
+- `npx vitest run src/App.test.tsx` — one file; add `-t "<name>"` to filter by test name
 - `npm run preview` — serve the built `dist/`
 
-There is no test runner configured yet. `npm run build` is the type-check gate; use `npx tsc -b` to type-check without building.
+`npm run build` is the type-check gate; use `npx tsc -b` to type-check without building. CI (`.github/workflows/ci.yml`) runs lint, format check, tests and build on pushes to `main` and on PRs, using the Node version from `mise.toml`.
+
+## Testing
+
+Vitest is configured in `vite.config.ts` (`test` block) with jsdom and React Testing Library. Test files live next to the code as `*.test.tsx`. Vitest globals are off, so import `describe`/`it`/`expect` from `vitest`. `src/test/setup.ts` registers the jest-dom matchers (`toHaveTextContent`, etc.) and runs Testing Library's `cleanup` after each test. Prefer `userEvent` over `fireEvent` for interactions.
 
 ## Architecture
 
